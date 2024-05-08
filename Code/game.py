@@ -1,5 +1,6 @@
 from settings import *
 from random import choice #random from object
+from timer import Timer
 
 class Game:
     def __init__(self):
@@ -20,10 +21,25 @@ class Game:
         self.line_surface.set_alpha(30)  # max 255, opacity, higher = less transparent
 
         #tetromino
-        self.tetronimo = Tetromino(choice(list(TETROMINOS.keys())), self.sprites)
+        self.tetromino = Tetromino(choice(list(TETROMINOS.keys())), self.sprites)
 
+
+        #timer
+        self.timers={
+            'vertical move': Timer(UPDATE_START_SPEED, True, self.move_down)
+        }
         #test
         # self.block = Block(self.sprites,pygame.Vector2(3,5), 'blue')
+        self.timers['vertical move'].activate()
+
+    def timer_update(self):
+        for timer in self.timers.values():
+            timer.update()
+
+    def move_down(self):
+        # print('timer')
+        self.tetromino.move_down()
+
     def draw_grid(self):
         for col in range(1, COLUMNS):  # adding 1 removes first line at 0
             x = col * CELL_SIZE
@@ -45,6 +61,9 @@ class Game:
         self,
     ):  # block image transfer = one surface ontop of another surface 2 args (surface, position(x,y))
 
+        #update timer
+        self.timer_update()
+        self.sprites.update()
         # drawing
         self.surface.fill(GRAY)
         self.sprites.draw(self.surface)
@@ -61,6 +80,9 @@ class Tetromino: #organizes multiple blocks into a shape
 
         #create blocks
         self.blocks = [Block(group, pos, self.color) for pos in self.block_positions] #list comprehension of creating a block instance of each block
+    def move_down(self):
+        for block in self.blocks:
+            block.pos.y += 1
 
 class Block(pygame.sprite.Sprite):
     def __init__(self, group, pos, color):
@@ -70,7 +92,12 @@ class Block(pygame.sprite.Sprite):
         self.image.fill(color)
 
         #position
-        self.pos = pygame.Vector2(pos) + pygame.Vector2(BLOCK_OFFSET)
-        x= self.pos.x * CELL_SIZE # needed to per grid
-        y= self.pos.y * CELL_SIZE
-        self.rect = self.image.get_rect(topleft=(x, y))
+        self.pos = pygame.Vector2(pos) + BLOCK_OFFSET
+        # x= self.pos.x * CELL_SIZE # needed to per grid
+        # y= self.pos.y * CELL_SIZE
+        self.rect = self.image.get_rect(topleft=self.pos * CELL_SIZE)
+
+    def update(self):
+        # print(self.pos)
+        self.pos * 40
+        self.rect.topleft = self.pos * CELL_SIZE
