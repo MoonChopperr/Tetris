@@ -95,14 +95,14 @@ class Game:
             for delete_row in delete_rows:
 
                 #delete full rows
-                for block in self.field_data[delete_row]:
-                    block.kill()
+                for sprite in self.sprites.sprites():
+                    if int(sprite.pos.y) == delete_row:
+                        sprite.kill()
                     # print('cleared row')
                 #move down blocks
-                for row in self.field_data:
-                    for block in row:
-                        if block and block.pos.y < delete_row:
-                            block.pos.y +=1
+                for sprite in self.sprites.sprites():
+                    if int(sprite.pos.y) < delete_row:
+                        sprite.pos.y += 1
             #rebuild field data
             self.field_data = [[0 for x in range(COLUMNS)] for y in range(ROWS)]
             for block in self.sprites:
