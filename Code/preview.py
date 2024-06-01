@@ -8,3 +8,4 @@ class  Preview:
         self.rectangle = self.surface.get_rect(topright = (WINDOW_WIDTH - PADDING,PADDING)) #returns rectangle around surface
     def run(self):
         self.display_surface.blit(self.surface, (self.rectangle))
+# pause
