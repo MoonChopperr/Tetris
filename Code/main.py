@@ -43,7 +43,7 @@ class Main:
             #components
             self.game.run()
             self.score.run()
-            self.preview.run()
+            self.preview.run(self.next_shapes)
             #updating game
             pygame.display.update() #updates what happens in the game
             self.clock.tick(144) #obj in pygame that controls the framerate, blank = as many fps
