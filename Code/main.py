@@ -15,6 +15,7 @@ class Main:
         self.display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
         pygame.display.set_caption("Ryou's Tetris") #name
         self.clock = pygame.time.Clock() #
+        pygame.display.set_caption('Tetris')
 
         #shapes for preview
         self.next_shapes = [choice(list(TETROMINOS.keys()))for shape in range(3)]
@@ -23,7 +24,7 @@ class Main:
         #components
         self.game = Game(self.get_next_shape)
         self.score = Score()
-        self.preview = Preview()
+        self.preview = Preview(self.next_shapes)
 
     def get_next_shape(self):
         next_shape = self.next_shapes.pop(0)
