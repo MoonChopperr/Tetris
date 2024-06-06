@@ -39,6 +39,14 @@ class Game:
         # self.block = Block(self.sprites,pygame.Vector2(3,5), 'blue')
         self.timers['vertical move'].activate()
 
+
+        #score
+        self.current_level=1
+        self.current_score=0
+        self.current_lines=0
+
+    def calculate_score(self, num_lines):
+
     def timer_update(self):
         for timer in self.timers.values():
             timer.update()
@@ -110,6 +118,8 @@ class Game:
             self.field_data = [[0 for x in range(COLUMNS)] for y in range(ROWS)]
             for block in self.sprites:
                 self.field_data[int(block.pos.y)][int(block.pos.x)] = block
+        #update score
+        self.calculate_score(len(delete_rows))
     def run(
         self,
     ):  # block image transfer = one surface ontop of another surface 2 args (surface, position(x,y))
