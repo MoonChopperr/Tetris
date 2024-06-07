@@ -54,6 +54,14 @@ class Game:
             self.down_speed_faster = self.down_speed * 0.3
             self.timers['vertical move'].duration = self.down_speed_faster
         self.update_score(self.current_lines, self.current_score, self.current_level)
+
+    def timer_update(self):
+        for timer in self.timers.values():
+            timer.update()
+
+    def move_down(self):
+        self.tetromino.move_down()
+        
     def timer_update(self):
         for timer in self.timers.values():
             timer.update()

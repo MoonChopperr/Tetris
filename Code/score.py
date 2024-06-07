@@ -5,6 +5,7 @@ class Score:
         self.surface = pygame.Surface((SIDEBAR_WIDTH, GAME_HEIGHT * SCORE_HEIGHT_FRACTION - PADDING))
         self.rect = self.surface.get_rect(bottomright = (WINDOW_WIDTH-PADDING, WINDOW_HEIGHT-PADDING)) #returns rectangle around surface
         self.display_surface = pygame.display.get_surface()
+
         #font
         self.font = pygame.font.Font(join('..', 'Graphics','Russo_One.ttf'), 30)
 
